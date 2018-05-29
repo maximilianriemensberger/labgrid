@@ -45,8 +45,10 @@ class RemotePlaceManager(ResourceManager):
         resource_entries = self.session.get_target_resources(place)
         expanded = []
         for resource_name, resource_entry in resource_entries.items():
+            args = resource_entry.args
+            name = args.pop('name', resource_name)
             new = target_factory.make_resource(
-                remote_place.target, resource_entry.cls, resource_name, resource_entry.args)
+                remote_place.target, resource_entry.cls, name, args)
             new.parent = remote_place
             new.avail = resource_entry.avail
             new.extra = resource_entry.extra
