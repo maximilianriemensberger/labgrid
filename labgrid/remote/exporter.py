@@ -348,12 +348,13 @@ class ExporterSession(ApplicationSession):
         try:
             resource_config = ResourceConfig(self.config.extra['resources'])
             for group_name, group in resource_config.data.items():
-                for resource_name, params in group.items():
-                    if resource_name == 'location':
+                for resource_type, params in group.items():
+                    if resource_type == 'location':
                         continue
                     if params is None:
                         continue
-                    cls = params.pop('cls', resource_name)
+                    cls = params.pop('cls', resource_type)
+                    resource_name = params.pop('name', resource_type)
                     yield from self.add_resource(
                         group_name, resource_name, cls, params
                     )
