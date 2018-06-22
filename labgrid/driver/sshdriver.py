@@ -145,7 +145,7 @@ class SSHDriver(CommandMixin, Driver, CommandProtocol, FileTransferProtocol):
     @Driver.check_active
     @step(args=['filename', 'remotepath'])
     def put(self, filename, remotepath=None):
-        transfer_cmd = "scp {prefix} {filename} -P {port} {user}@{host}:{remotepath}".format(
+        transfer_cmd = "scp {prefix} -P {port} {filename} {user}@{host}:{remotepath}".format(
             filename=filename,
             user=self.networkservice.username,
             host=self.networkservice.address,
